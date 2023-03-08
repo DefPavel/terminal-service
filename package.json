@@ -1,0 +1,39 @@
+{
+  "name": "terminal-service",
+  "version": "1.0.0",
+  "description": "microserive for api terimal",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "eslint": "eslint --fix --ext .js ."
+  },
+  "keywords": [
+    "micro",
+    "service",
+    "microservice",
+    "api",
+    "terminal"
+  ],
+  "author": "DefPavel",
+  "license": "ISC",
+  "dependencies": {
+    "base64url": "^3.0.1",
+    "config": "^3.3.2",
+    "dotenv": "^10.0.0",
+    "global": "^4.4.0",
+    "ioredis": "^5.2.4",
+    "knex": "^0.21.11",
+    "micromq": "^3.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "eslint": "8.22.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.6",
+    "prettier": "2.6.2"
+  }
+}
