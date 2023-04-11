@@ -1,0 +1,30 @@
+version: '3'
+services:
+  terminal-service:
+    container_name: 'terminal-service'
+    restart: 'unless-stopped'
+    build:
+      context: './src/'
+      dockerfile: 'Dockerfile.dev'
+    ports:
+      - '8089:8080'
+    networks:
+      - 'jmu_network'
+    volumes:
+      - './src:/var/www/api'
+    environment:
+      DEV_STAGE: 'Alpha'
+      DEV_VERSION: 'v1.0.0'
+      DB_HOST: 'db-jmu'
+      DB_USER: 'dbjmu'
+      DB_PASSWORD: 'Afgihn215zxdg'
+      DB_NAME: 'jmu'
+      REDIS_PASSWORD: 'JP5Lard967wm'
+      REDIS_HOST: 'redis'
+      REDIS_PORT: '6379'
+      JWT_KEY: '88e64e2321a9959ca410ef026eeee408d50742992fdd7357703d0d5d60467a01'
+      RABBIT_URL: 'amqp://root:root@rabbitmq'
+      
+networks:
+  jmu_network:
+    external: true
