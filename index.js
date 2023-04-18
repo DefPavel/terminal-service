@@ -10,11 +10,11 @@ const app = new MicroMQ({
   },
 });
 
-const { afisha: afishaApi, schedule: scheduleApi } = router(app);
+const { afisha: afishaApi, schedule: scheduleApi, terminals: terminalApi } = router(app);
 
 // Api routes
 afishaApi(`${baseurl}/afisha`);
 scheduleApi(`${baseurl}/schedule`);
-
+terminalApi(`${baseurl}/terminals`);
 // Start app
 app.start().then();
