@@ -3,17 +3,46 @@ const fs = require('fs');
 // Вернуть изображения для определённого терминала
 const getAfishaByTerminalId = async (req, res) => {
   const { id: idTerminal } = req.params;
+
+  const page = parseInt(req.query.page) || 1;
+
+  const limit = parseInt(req.query.limit) || 5;
+
   try {
-    if (!idTerminal) throw 'Параметр idTerminal не найден';
+    const startIndex = (page - 1) * limit;
+
+    const endIndex = page * limit;
+
+    if (!idTerminal) throw 'Параметр не найден';
+    const result = {};
+
+    const { count } = await knexConnection('afisha').count().first();
 
     const data = await knexConnection('afisha')
       .select('id', 'path_url', 'date_crt')
       .where('id_terminal', idTerminal)
-      .orderBy('date_crt', 'desc');
+      .offset(startIndex)
+      .limit(limit)
+      .orderBy('id', 'desc');
 
-    res.status(200).json(data || []);
-  } catch (error) {
-    res.status(500).json(error);
+    if (endIndex < count)
+      result.next = {
+        page: page + 1,
+        limit: limit,
+      };
+
+    if (startIndex > 0)
+      result.previous = {
+        page: page - 1,
+        limit: limit,
+      };
+
+    result.data = data;
+
+    res.status(200).json(result || []);
+  } catch (e) {
+    const error = new Error(e);
+    res.status(500).json({ message: error.message });
   }
 };
 // Удалить все изображения на терменале
@@ -31,8 +60,9 @@ const deleteImageByTerminal = async (req, res) => {
     }
 
     res.status(200).json([]);
-  } catch (error) {
-    res.status(500).json(error);
+  } catch (e) {
+    const error = new Error(e);
+    res.status(500).json({ message: error.message });
   }
 };
 // Удалить определённое изображение
@@ -45,8 +75,9 @@ const deleteImage = async (req, res) => {
     await fs.promises.unlink(data[0].path_url);
 
     res.status(200).json([]);
-  } catch (error) {
-    res.status(500).json(error);
+  } catch (e) {
+    const error = new Error(e);
+    res.status(500).json({ message: error.message });
   }
 };
 // проверка существования
@@ -89,8 +120,9 @@ const uploadedImageByTerminal = async (req, res) => {
     } else await writeImages(path + arrayFiles.name, idTerminal, arrayFiles.data.data);
 
     res.status(200).json([]);
-  } catch (error) {
-    res.status(500).json(error);
+  } catch (e) {
+    const error = new Error(e);
+    res.status(500).json({ message: error.message });
   }
 };
 
