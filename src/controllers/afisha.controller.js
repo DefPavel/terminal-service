@@ -25,6 +25,10 @@ const getAfishaByTerminalId = async (req, res) => {
       .limit(limit)
       .orderBy('id', 'desc');
 
+    data.forEach((x) => {
+      x.path_url = x.path_url.split(`uploadFiles/${idTerminal}/`)[1];
+    });
+
     if (endIndex < count)
       result.next = {
         page: page + 1,
