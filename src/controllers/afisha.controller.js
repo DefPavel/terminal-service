@@ -95,8 +95,10 @@ const checkDirectory = async (path) => {
 };
 // Записать файл
 const writeImages = async (path, idTerminal, buffer) => {
+  const checkFile = await knexConnection('afisha').where('path_url', path).first();
+  if (checkFile) throw 'Данный файл с таким именем уже существует!';
   // создать файл
-  await fs.promises.writeFile(path, Buffer.from(buffer));
+  await fs.promises.writeFile(path, Buffer.from(buffer), 'UTF-8');
   // создать запись в бд
   await knexConnection('afisha').insert({
     path_url: path,
