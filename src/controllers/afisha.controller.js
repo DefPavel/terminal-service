@@ -29,7 +29,6 @@ const getAfishaByTerminalId = async (req, res) => {
 
 		const result = await Promise.all([count, data]).then(
 			async ([total, rows]) => {
-				console.log(total);
 				const paginateObj = {
 					total: parseInt(total),
 					perPage: perPage,
