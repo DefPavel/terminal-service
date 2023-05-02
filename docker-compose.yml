@@ -11,7 +11,7 @@ services:
     networks:
       - 'jmu_network'
     volumes:
-      - './:/api'
+      - './:/var/www/api'
     environment:
       DEV_STAGE: 'Alpha'
       DEV_VERSION: 'v1.0.0'

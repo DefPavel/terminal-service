@@ -1,4 +1,4 @@
 FROM node:14.13.1
-WORKDIR /api
+WORKDIR /var/www/api
 ENTRYPOINT ["npm", "run", "dev"]
 EXPOSE 8080
