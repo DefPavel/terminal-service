@@ -5,13 +5,15 @@ const {
   deleteImageByTerminal,
 } = require('../../controllers/afisha.controller');
 
+const {checkToken} = require('../../middlewares/auth.middleware');
+
 module.exports = (app, url, ...args) => {
   // Получить афишу на терминал
-  app.get(`${url}/getBy/:id`, ...args, getAfishaByTerminalId);
+  app.get(`${url}/getBy/:id`, checkToken, getAfishaByTerminalId);
   // Загрузить фото на терминал
-  app.post(`${url}/upload/:id`, ...args, uploadedImageByTerminal);
+  app.post(`${url}/upload/:id`, checkToken, uploadedImageByTerminal);
   // Удалить определенное изображение по id
-  app.delete(`${url}/del/:id`, ...args, deleteImage);
+  app.delete(`${url}/del/:id`, checkToken, deleteImage);
   // Удалить все изображения с терминала по id Терминала
-  app.delete(`${url}/all/:id`, ...args, deleteImageByTerminal);
+  app.delete(`${url}/all/:id`, checkToken, deleteImageByTerminal);
 };
