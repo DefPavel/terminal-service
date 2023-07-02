@@ -9,14 +9,10 @@ const CheckToken = async function (req, res, next) {
     if (req?.headers['auth-token']) {
       const token = req?.headers['auth-token'];
 
-      console.log(token);
-
       if (jwt.CheckJWT(token)) {
         const dateTime = moment().format('YYYY-MM-DD HH:mm:ss');
         const { id_user: idUser } = jwt.getPayload(token);
         let session = await getSession(idUser, token);
-
-        console.log(session);
 
         if (session) {
           session = JSON.parse(session);

@@ -7,9 +7,8 @@ const {
   } = require('../../database/redisConnection');
   const baseKey = 'sessions:user_';
   
-  // ! Changed
   // Set new session with lifetime, default 30 min
-  module.exports.setNewSessionExpire = async (idUser, token, sessionObj, expiredTime = 10) =>
+  module.exports.setNewSessionExpire = async (idUser, token, sessionObj, expiredTime = 1800) =>
     setXRedisAsync(`${baseKey}${idUser}:${token}`, JSON.stringify(sessionObj), expiredTime);
   
   // Set new session without lifetime
